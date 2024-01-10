@@ -25,4 +25,3 @@ jobs:
       - run: node common/scripts/install-run-rush.js update
 
       - run: node test.js
-        displayName: Check that core submodule is merged to core repo
