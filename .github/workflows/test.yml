@@ -1,0 +1,30 @@
+name: Test
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    strategy:
+      matrix:
+        version: [18.0, 18.x, 20.0, 20.x, 21.x]
+    name: Check Changes
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version:  ${{ matrix.version }}
+
+      - run: node common/scripts/install-run-rush.js update
+
+      - run: node test.mjs
