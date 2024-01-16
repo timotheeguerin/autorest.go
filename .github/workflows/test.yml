@@ -12,6 +12,10 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test:
+    strategy:
+      matrix:
+        version: [18.0, 18.x, 20.0, 20.x, 21.x]
+        os: [ubuntu-latest, windows-latest]
     name: Check Changes
     runs-on: windows-latest
     steps:
@@ -20,7 +24,7 @@ jobs:
       - name: Use Node.js 20.x
         uses: actions/setup-node@v3
         with:
-          node-version: 21.x
+          node-version:  ${{ matrix.version }}
 
       - run: node common/scripts/install-run-rush.js update
 
