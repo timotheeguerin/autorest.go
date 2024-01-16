@@ -8,10 +8,12 @@ await writeFile(p, '')
 
 console.log('length: ', resolve(p).length)
 
+let hasError = false
 try {
   await realpath(p)
 } catch (e) {
   console.log('error with fs.promises.realpath', e)
+  hasError = true;
 }
 
 try {
@@ -26,6 +28,8 @@ try {
   })
 } catch (e) {
   console.log('error with fs.realpath', e)
+  hasError = true;
+
 }
 
 try {
@@ -46,10 +50,18 @@ try {
   realpathSync(p)
 } catch (e) {
   console.log('error with fs.realpathSync', e)
+  hasError = true;
+
 }
 
 try {
   realpathSync.native(p)
 } catch (e) {
   console.log('error with fs.realpathSync.native', e)
+  hasError = true;
+
+}
+
+if(hasError) {
+  process.exit(1);
 }

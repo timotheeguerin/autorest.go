@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         version: [18.0, 18.x, 20.0, 20.x, 21.x]
-        os: [ubuntu-latest, windows-latest]
     name: Check Changes
     runs-on: windows-latest
     steps:
